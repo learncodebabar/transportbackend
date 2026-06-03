@@ -254,7 +254,24 @@ app.use('/api/rider-verification', riderVerificationRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/bids', bidRoutes);
-
+// Add this after the middleware section (around line 200-210)
+// ========== ROOT ENDPOINT ==========
+app.get('/', (req, res) => {
+  res.json({
+    success: true,
+    message: 'CristRide Ride Sharing API is working!',
+    version: '1.0.0',
+    status: 'operational',
+    endpoints: {
+      api: '/api',
+      health: '/api/health',
+      test: '/api/test',
+      serverInfo: '/api/server-info'
+    },
+    documentation: 'See /api/health for system status',
+    timestamp: new Date().toISOString()
+  });
+});
 // Health check endpoint
 app.get('/api/health', (req, res) => {
   res.json({
